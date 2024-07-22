@@ -27,8 +27,7 @@ jobs:
        echo "test file " > test.txt
        jf rt upload "test.txt" noam-generic-local
        
- buildinfo:
-   # This action publishes the build information to Artifactory and deletes older builds
+ # This action publishes the build information to Artifactory and deletes older builds
    - name: Build to Artifactory
      run: |
        export BUILD_NAME="noam-github-actions-build"
