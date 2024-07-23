@@ -1,11 +1,11 @@
-# syntax=docker/dockerfile:1
-FROM busybox:latest
-COPY --chmod=755 <<EOF /app/run.sh
-#!/bin/sh
-while true; do
-  echo -ne "The time is now $(date +%T)\\r"
-  sleep 1
-done
-EOF
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-ENTRYPOINT /app/run.sh
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /usr/src/app
+COPY . .
+
+# Run app.py when the container launches
+CMD ["python", "main.py"]
