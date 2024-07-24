@@ -1,9 +1,10 @@
 name: Push Build to Artifactory
 
-on: [push]
+on: 
+ workflow_dispatch:
 
 jobs:
- create:
+ buildit:
    runs-on: ubuntu-latest
   
    steps:
@@ -24,8 +25,8 @@ jobs:
 
    - name: Push Build to Artifactory
      run: |
-       echo "test file " > test.txt
-       jf rt upload "test.txt" noam-generic-local
+       echo "test1 file " > test1.txt
+       jf rt upload "test1.txt" noam-generic-local
        
  # This action publishes the build information to Artifactory and deletes older builds
    - name: Build to Artifactory
@@ -35,5 +36,6 @@ jobs:
        export BUILD_NUMBER="1"
        export PATH_TO_DIRECTORY="name/version/dates"
        jf rt build-publish $BUILD_NAME $BUILD_NUMBER
+       echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
      
        jf rt bdi c --max-builds=1
