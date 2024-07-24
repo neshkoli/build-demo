@@ -4,13 +4,20 @@ on:
  workflow_dispatch:
 
 jobs:
- buildit:
+ docker-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: | 
+         docker build . --file Dockerfile --tag my-app
+         docker run my-app
+      
+ upload:
    runs-on: ubuntu-latest
-  
-   steps:
-   - name: Checkout Code
-     uses: actions/checkout@v4
+   needs: [ docker-build ]
 
+   steps:
    - name: Setup JFrog CLI
      uses: jfrog/setup-jfrog-cli@v4
      env:
