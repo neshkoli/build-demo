@@ -1,0 +1,27 @@
+name: Push Build to Artifactory
+
+on: 
+ push:
+ repository_dispatch:
+    types: hot-deploy
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Login to Artifactory Registry
+        run: docker login -u ${{ secrets.ARTIFACTORY_USERNAME }} -p ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }} ${{ vars.ARTIFACTORY_URL }}
+       
+      - name: Build the Docker image
+        run: | 
+           docker build . --file Dockerfile --tag my-app:latest
+           docker run my-app
+           docker push ${{ vars.ARTIFACTORY_URL }}/noam-docker-local/my-app:latest
+
+      - name: Log out from Artifactory
+        if: always()
+        run: docker logout ${{ vars.ARTIFACTORY_URL }}
+
