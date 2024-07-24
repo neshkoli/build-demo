@@ -23,16 +23,13 @@ jobs:
           username: ${{ secrets.ARTIFACTORY_USERNAME }}  # Your Artifactory username
           password: ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }} 
           
-#      - name: Build the Docker image
-#        run: | 
-#           docker build . --file Dockerfile --tag my-app:latest
-#           docker run my-app
+      - name: Build the Docker image
+        run: | 
+           docker build . --file Dockerfile --tag my-app:latest
+           docker run my-app
 
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: user/app:latest
+           docker tag my-app:latest evidencetrial.jfrog.io/noam-docker-local/my-app:latest
+           docker push evidencetrial.jfrog.io/noam-docker-local/my-app:latest
 
 
       - name: Log out from Artifactory
