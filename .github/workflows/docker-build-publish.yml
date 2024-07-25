@@ -30,15 +30,8 @@ jobs:
            docker build . --file Dockerfile --tag my-app:latest
            docker tag my-app:latest evidencetrial.jfrog.io/noam-docker-local/my-app:latest
            docker push evidencetrial.jfrog.io/noam-docker-local/my-app:latest
-
-      - name: Build to Artifactory
-        run: |
-          export BUILD_NAME="noam-github-actions-build"
-          export BUILD_MODULE="my-module"
-          export BUILD_NUMBER="1"
-          export PATH_TO_DIRECTORY="name/version/dates"
-          jf rt build-publish $BUILD_NAME $BUILD_NUMBER
-          jf evd help
+           jf rt docker-push evidencetrial.jfrog.io/my-app:latest noam-docker-local --build-name noam-docker --build-number 1
+           jf rt build-publish noam-docker 1
 
       - name: Log out from Artifactory
         if: always()
