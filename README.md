@@ -1,5 +1,7 @@
 # Evidence intgeration
 
+![logo](https://s201.q4cdn.com/814780939/files/design/svg/JFrog-Logo-Dana-Luski.svg)
+
 Demo integration of 🐸 evidence with github action 🚀
 
 ```mermaid
