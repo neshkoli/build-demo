@@ -1,7 +1,6 @@
 name: Push Build to Artifactory
 
-on: 
- push:
+on: [ workflow_dispatch, push]
 
 jobs:
   docker-build:
